@@ -1,0 +1,18 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "env": {
+  },
+  "formation": {
+  },
+  "name": "lms-lectures",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
