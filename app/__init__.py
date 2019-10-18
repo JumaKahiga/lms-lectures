@@ -1,12 +1,26 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
-from flask_restful import Api, Resource
+from flask_migrate import Migrate
+from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
 
 from app.views.index import HelloWorld
+from config import config_settings
+
+environment = os.environ['ENVIRONMENT']
+
+db = SQLAlchemy()
+migrate = Migrate()
 
 
-def create_app(config):
+def create_app(config=environment):
     app = Flask(__name__)
+    app.config.from_object(config_settings[environment])
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.init_app(app)
+    migrate.init_app(app, db)
     CORS(app)
     api = Api(app)
     api.add_resource(HelloWorld, '/')
