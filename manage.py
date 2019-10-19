@@ -2,7 +2,7 @@ from flask_migrate import MigrateCommand
 from flask_script import Manager
 
 from app import create_app
-from app.models.model import Entity
+from app.models.person_model import User, Admin
 
 app = create_app('config')
 
