@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.views.index import HelloWorld
 from config import config_settings
 
-environment = os.environ['ENVIRONMENT']
+environment = os.getenv('ENVIRONMENT')
 
 db = SQLAlchemy()
 migrate = Migrate()

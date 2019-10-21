@@ -1,10 +1,10 @@
 import os
 
 
-class Config:
+class Config():
     DEBUG = True
     SECRET_KEY = ''
-    SQLALCHEMY_DATABASE_URI = os.environ['DB_URL']
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 
 class DevelopmentConfig(Config):

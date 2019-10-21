@@ -14,7 +14,7 @@ before_script:
   - export FLASK_APP="manage.py"
   - export ENVIRONMENT="testing"
   - psql -c 'create database lms_test;' -U postgres
-  - export DB_URL='postgresql://postgres@localhost:5432/lms_test'
+  - export DATABASE_URL='postgresql://postgres@localhost:5432/lms_test'
   - flask db stamp head
   - flask db migrate
   - flask db upgrade
