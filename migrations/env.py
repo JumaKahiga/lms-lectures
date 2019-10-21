@@ -19,8 +19,9 @@ logger = logging.getLogger('alembic.env')
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from app.models.model import Entity
-target_metadata = Entity.metadata
+from app.models.person_model import Admin, User
+target_metadata = User.metadata
+target_metadata = Admin.metadata
 
 
 from flask import current_app
