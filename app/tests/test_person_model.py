@@ -1,7 +1,8 @@
 from faker import Faker
 
 from app.models.person_model import Person
-from app.tests.person_factory import AdminFactory, UserFactory
+from app.tests.factories.person_factory import (
+    AdminFactory, UserFactory)
 from app.tests.test_base import BaseTest
 
 fake = Faker()
