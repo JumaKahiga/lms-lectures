@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
-from app.views.index import HelloWorld
+from app.views.index import HelloWorld, LoadData
 from config import config_settings
 
 environment = os.getenv('ENVIRONMENT')
@@ -24,5 +24,6 @@ def create_app(config=environment):
     CORS(app)
     api = Api(app)
     api.add_resource(HelloWorld, '/')
+    api.add_resource(LoadData, '/load_data')
 
     return app
