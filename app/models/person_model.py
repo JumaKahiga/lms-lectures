@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 from app import db
+from app.models.lectures_model import Lecture, Review
 
 
 class Person(db.Model):
@@ -27,7 +28,7 @@ class Person(db.Model):
         return 'person_' + (cls.__name__).lower()
 
     def __repr__(self):
-        return '<name {}>'.format(self.name)
+        return '<email {}>'.format(self.email)
 
 
 class Admin(Person):
@@ -42,3 +43,5 @@ class User(Person):
     company = db.Column(db.String(128))
     avatar_url = db.Column(db.String())
     social_urls = db.Column(JSON)
+    lectures = db.relationship(Lecture, backref='author_lectures', lazy=True)
+    reviews = db.relationship(Review, backref='user_reviews', lazy=True)

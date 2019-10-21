@@ -1,17 +1,7 @@
-import os
-
 import factory
-from faker import Faker
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 
 from app.models.person_model import Admin, User, Person
-
-
-engine = create_engine(os.getenv('DATABASE_URL'))
-session = scoped_session(sessionmaker(bind=engine))
-
-fake = Faker()
+from app.tests.factories.base_factory import session, fake
 
 
 class AdminFactory(factory.alchemy.SQLAlchemyModelFactory):
