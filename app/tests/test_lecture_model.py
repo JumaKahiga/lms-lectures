@@ -23,5 +23,5 @@ class TestReviewModel(BaseTest):
         self.review = ReviewFactory()
 
     def test_review_has_non_nullable_fields(self):
-        self.assertTrue(self.review.lecture)
+        self.assertTrue(self.review.reviewed_lecture)
         self.assertTrue(self.review.user)

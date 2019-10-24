@@ -19,8 +19,15 @@ logger = logging.getLogger('alembic.env')
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
+from app.models.lectures_model import Lecture, Review
+from app.models.person_model import Admin, User
+
+target_metadata = Admin.metadata
+target_metadata = User.metadata
+target_metadata = Lecture.metadata
+target_metadata = Review.metadata
+
+
 from flask import current_app
 config.set_main_option(
     'sqlalchemy.url', current_app.config.get(

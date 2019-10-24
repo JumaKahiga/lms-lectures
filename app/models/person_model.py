@@ -10,9 +10,9 @@ from app.models.lectures_model import Lecture, Review
 class Person(db.Model):
     __abstract__ = True
 
-    name = db.Column(db.String(75), nullable=False)
+    name = db.Column(db.String(75))
     email = db.Column(db.String(75), unique=True)
-    password_hash = db.Column(db.String(128), nullable=False)
+    password_hash = db.Column(db.String(128), default="12345")
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(
         db.DateTime, default=db.func.now(), onupdate=db.func.now())
@@ -40,7 +40,7 @@ class User(Person):
     id = db.Column(db.Integer(), primary_key=True)
     is_author = db.Column(db.Boolean(), default=False)
     bio = db.Column(db.Text())
-    company = db.Column(db.String(128))
+    company = db.Column(db.String())
     avatar_url = db.Column(db.String())
     social_urls = db.Column(JSON)
     lectures = db.relationship(Lecture, backref='author_lectures', lazy=True)

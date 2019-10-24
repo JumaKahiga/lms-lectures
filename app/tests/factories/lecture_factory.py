@@ -31,4 +31,4 @@ class ReviewFactory(factory.alchemy.SQLAlchemyModelFactory):
     user = factory.SubFactory(UserFactory)
     text = fake.text()
     rating = fake.random_int()
-    lecture = factory.SubFactory(LectureFactory)
+    reviewed_lecture = factory.SubFactory(LectureFactory)
