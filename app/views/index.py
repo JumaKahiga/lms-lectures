@@ -16,4 +16,4 @@ class LoadData(Resource):
             return make_response(
                 jsonify({'message': f}), 201)
         return make_response(jsonify(
-            {'message': 'an error occured during seeding'}), 400)
+            {'error': 'an error occured during seeding'}), 400)

@@ -5,7 +5,7 @@ from app.tests.test_base import BaseTest
 
 class TestLectureModel(BaseTest):
     def setUp(self):
-        super(BaseTest, self).setUp()
+        super(TestLectureModel, self).setUp()
         self.lecture = LectureFactory()
 
     def test_lecture_has_non_nullable_fields(self):
@@ -19,7 +19,7 @@ class TestLectureModel(BaseTest):
 
 class TestReviewModel(BaseTest):
     def setUp(self):
-        super(BaseTest, self).setUp()
+        super(TestReviewModel, self).setUp()
         self.review = ReviewFactory()
 
     def test_review_has_non_nullable_fields(self):

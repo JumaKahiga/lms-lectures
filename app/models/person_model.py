@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declared_attr
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-from app import db
+from app.models import db
 from app.models.lectures_model import Lecture, Review
 
 
@@ -23,12 +23,20 @@ class Person(db.Model):
     def authenticate_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+
     @declared_attr
     def __tablename__(cls):
         return 'person_' + (cls.__name__).lower()
 
+    def __str__(self):
+        return f'{self.email}'
+
     def __repr__(self):
-        return '<email {}>'.format(self.email)
+        return f'<email {self.email}>'
 
 
 class Admin(Person):

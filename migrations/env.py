@@ -1,5 +1,6 @@
 from __future__ import with_statement
 
+import os
 import logging
 from logging.config import fileConfig
 
@@ -29,6 +30,16 @@ target_metadata = Review.metadata
 
 
 from flask import current_app
+
+# if os.getenv('ENVIRONMENT') == 'testing':
+#     config.set_main_option(
+#         'sqlalchemy.url', os.getenv(
+#             'TEST_DATABASE_URL').replace('%', '%%'))
+
+# config.set_main_option(
+#     'sqlalchemy.url', os.getenv(
+#         'DATABASE_URL').replace('%', '%%'))
+
 config.set_main_option(
     'sqlalchemy.url', current_app.config.get(
         'SQLALCHEMY_DATABASE_URI').replace('%', '%%'))

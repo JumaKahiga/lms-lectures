@@ -4,15 +4,15 @@ from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
 
+from app.models import db
 from app.views.index import HelloWorld, LoadData
+from app.views.register import CreateUser, CreateAdmin
 from config import config_settings
 
-environment = os.getenv('ENVIRONMENT')
-
-db = SQLAlchemy()
 migrate = Migrate()
+
+environment = os.getenv('ENVIRONMENT')
 
 
 def create_app(config=environment):
@@ -25,5 +25,7 @@ def create_app(config=environment):
     api = Api(app)
     api.add_resource(HelloWorld, '/')
     api.add_resource(LoadData, '/load_data')
+    api.add_resource(CreateUser, '/user/register')
+    api.add_resource(CreateAdmin, '/admin/register')
 
     return app

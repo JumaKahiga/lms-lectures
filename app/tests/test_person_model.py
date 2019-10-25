@@ -10,7 +10,7 @@ fake = Faker()
 
 class TestPersonModel(BaseTest):
     def setUp(self):
-        super(BaseTest, self).setUp()
+        super(TestPersonModel, self).setUp()
         self.password = fake.password()
         self.person = Person()
         self.person.set_password(self.password)
@@ -22,7 +22,7 @@ class TestPersonModel(BaseTest):
 
 class TestAdminModel(BaseTest):
     def setUp(self):
-        super(BaseTest, self).setUp()
+        super(TestAdminModel, self).setUp()
         self.admin = AdminFactory()
 
     def test_if_admin(self):
@@ -31,7 +31,7 @@ class TestAdminModel(BaseTest):
 
 class TestUserModel(BaseTest):
     def setUp(self):
-        super(BaseTest, self).setUp()
+        super(TestUserModel, self).setUp()
         self.user = UserFactory()
 
     def test_if_default_user(self):

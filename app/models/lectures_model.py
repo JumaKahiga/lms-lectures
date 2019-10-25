@@ -1,6 +1,6 @@
 from sqlalchemy.dialects.postgresql import JSON
 
-from app import db
+from app.models import db
 
 
 class Lecture(db.Model):
@@ -20,6 +20,11 @@ class Lecture(db.Model):
     title = db.Column(db.String(), nullable=False)
     video_url = db.Column(db.String())
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+
 
 class Review(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -30,3 +35,8 @@ class Review(db.Model):
     rating = db.Column(db.Integer())
     reviewed_lecture = db.Column(
         db.Integer, db.ForeignKey('lecture.id'), nullable=False)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
