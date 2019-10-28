@@ -1,19 +1,14 @@
-from flask import make_response, jsonify, request
+from flask import make_response, jsonify
 from flask_restful import Resource
+from sqlalchemy.sql import func
 
-from app.utilities.data_loader import DataLoadContextManager
+from app.models.lectures_model import Lecture
 
 
-class HelloWorld(Resource):
+class RandomLecture(Resource):
     def get(self):
-        return {'hello': 'world'}
+        random_lecture = Lecture.query.order_by(func.random()).first()
+        lecture_dict = random_lecture.toJson()
 
-
-class LoadData(Resource):
-    def post(self):
-        file = request.files['file']
-        with DataLoadContextManager(file) as f:
-            return make_response(
-                jsonify({'message': f}), 201)
         return make_response(jsonify(
-            {'error': 'an error occured during seeding'}), 400)
+            {'lecture': lecture_dict}), 200)

@@ -8,9 +8,10 @@ from flask_migrate import Migrate
 from flask_restful import Api
 
 from app.models import db
-from app.views.index import HelloWorld, LoadData
+from app.views.index import RandomLecture
 from app.views.login import LoginAdmin, LoginUser
 from app.views.register import CreateUser, CreateAdmin
+from app.views.seed_data import LoadData
 from config import config_settings
 
 migrate = Migrate()
@@ -33,7 +34,7 @@ def create_app(config=environment):
     jwt = JWTManager(app)
     CORS(app)
     api = Api(app)
-    api.add_resource(HelloWorld, '/')
+    api.add_resource(RandomLecture, '/')
     api.add_resource(LoadData, '/load_data')
     api.add_resource(CreateUser, '/user/register')
     api.add_resource(CreateAdmin, '/admin/register')
