@@ -1,10 +1,6 @@
 import json
 from faker import Faker
 
-from app import create_app
-from app.models.person_model import Person
-from app.tests.factories.person_factory import (
-    AdminFactory, UserFactory)
 from app.tests.test_base import BaseTest
 
 fake = Faker()
@@ -52,7 +48,7 @@ class TestRegistrationView(BaseTest):
         self.assertIn(self.user.get('email'), data.get('data'))
 
     def test_invalid_admin_name(self):
-        self.admin['name'] = fake.random_int()
+        self.admin['name'] = '   '
         response = self.client.post(
             '/admin/register',
             data=json.dumps(self.admin),
@@ -64,7 +60,7 @@ class TestRegistrationView(BaseTest):
             data.get('error'), 'invalid characters used for name')
 
     def test_invalid_user_name(self):
-        self.user['name'] = fake.random_int()
+        self.user['name'] = '   '
         response = self.client.post(
             '/user/register',
             data=json.dumps(self.user),

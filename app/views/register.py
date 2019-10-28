@@ -1,5 +1,5 @@
 import json
-from flask import make_response, jsonify, request
+from flask import make_response, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import RequestParser
 
@@ -16,7 +16,6 @@ class CreateUser(Resource):
             'email', type=str, required=True, help='email is required')
         self._parser.add_argument(
             'password', required=True, help='password cannot be blank')
-        self._parser.add_argument('is_author', type=bool)
         self._parser.add_argument('bio', type=str)
         self._parser.add_argument('company', type=str)
         self._parser.add_argument('avatar_url', type=str)
@@ -33,7 +32,7 @@ class CreateUser(Resource):
                 {'error': 'invalid email'}), 400)
 
         for key, value in data.items():
-            if key in ('name',) and not validate_string(value):
+            if key in ('name', 'password', 'bio') and not validate_string(value):
                 return make_response(jsonify(
                     {'error': f'invalid characters used for {key}'}), 400)
             else:

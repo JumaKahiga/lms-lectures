@@ -10,9 +10,7 @@ def validate_email(email):
 
 
 def validate_string(string_):
-    string_ = string_.replace(' ', '')
-
-    if string_.isalpha():
-        return True
-    else:
+    if string_.isspace():
         return False
+    else:
+        return True
