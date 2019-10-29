@@ -9,6 +9,7 @@ from flask_restful import Api
 
 from app.models import db
 from app.views.index import RandomLecture
+from app.views.lectures import FetchAllLectures
 from app.views.login import LoginAdmin, LoginUser
 from app.views.register import CreateUser, CreateAdmin
 from app.views.seed_data import LoadData
@@ -40,5 +41,7 @@ def create_app(config=environment):
     api.add_resource(CreateAdmin, '/admin/register')
     api.add_resource(LoginAdmin, '/admin/login')
     api.add_resource(LoginUser, '/user/login')
+    api.add_resource(
+        FetchAllLectures, '/lectures/<start_page>/<items_per_page>')
 
     return app
