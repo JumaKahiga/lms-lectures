@@ -1,19 +1,18 @@
 import os
+
 import json
 import pytest
+
 from faker import Faker
 
 from app.tests.test_base import BaseTest
 
 fake = Faker()
 
-
+@pytest.mark.skipif(os.getenv('ENVIRONMENT') == 'testing', reason='seed data not loaded on Travis CI') # noqa
 class TestRandomLectureView(BaseTest):
     def setUp(self):
         super(TestRandomLectureView, self).setUp()
-
-        if os.getenv('ENVIRONMENT') == 'testing':
-            pytest.skip("seed data not loaded on Travis CI")
 
     def test_fetch_random_lecture(self):
         response = self.client.get('/')
