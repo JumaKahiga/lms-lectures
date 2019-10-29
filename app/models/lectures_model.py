@@ -25,6 +25,23 @@ class Lecture(db.Model):
         db.session.commit()
         return self
 
+    def toJson(self):
+        output_dict = dict(
+            id=self.id,
+            title=self.title,
+            author=self.author,
+            thumbnail_url=self.thumbnail_url,
+            type=self.type,
+            excerpt=self.excerpt,
+            uploaded_at=self.uploaded_at,
+            pdf_download_url=self.pdf_download_url,
+            slug=self.slug,
+            tags=self.tags,
+            content=self.content,
+            transcript=self.transcript,
+            video_url=self.video_url)
+        return output_dict
+
 
 class Review(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

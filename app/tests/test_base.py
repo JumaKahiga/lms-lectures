@@ -1,4 +1,5 @@
 import unittest
+
 from app import create_app
 
 
@@ -9,16 +10,12 @@ class BaseTest(unittest.TestCase):
 
     def setUp(self):
         self.app = create_app(config="testing")
+        self.app_context = self.app.app_context()
+        self.app_context.push()
         self.client = self.app.test_client(self)
 
     def tearDown(self):
-        pass
-
-
-class TestView(BaseTest):
-    def test_init_view(self):
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
+        self.app_context.pop()
 
 
 if __name__ == '__main__':
