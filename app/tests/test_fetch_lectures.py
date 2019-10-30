@@ -61,3 +61,24 @@ class TestFetchLectureView(BaseTest):
         self.assertIn('error', data)
         self.assertEqual(data[
             'error'], 'only integers allowed for page numbers')
+
+
+class TestFetchTopTenLectures(BaseTest):
+    def setUp(self):
+        super(TestFetchTopTenLectures, self).setUp()
+
+    @pytest.mark.skipif(os.getenv('ENVIRONMENT') == 'testing', reason='seed data not loaded on Travis CI') # noqa
+    def test_top_ten_lectures(self):
+        response = self.client.get('/lectures/top-10')
+        data = json.loads(response.data.decode())
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('lectures', data)
+
+    @pytest.mark.skipif(os.getenv('ENVIRONMENT') == 'development', reason='seed data not loaded on Travis CI') # noqa
+    def test_top_ten_lectures_when_db_empty(self):
+        response = self.client.get('/lectures/top-10')
+        data = json.loads(response.data.decode())
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('error', data)

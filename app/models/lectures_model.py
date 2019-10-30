@@ -1,4 +1,8 @@
+import re
+import json
+from sqlalchemy import desc
 from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.sql import func
 
 from app.models import db
 
@@ -26,10 +30,13 @@ class Lecture(db.Model):
         return self
 
     def toJson(self):
+        _average_rating = Review.get_average_ratings(self.id)
+
         output_dict = dict(
             id=self.id,
             title=self.title,
             author=self.author,
+            average_rating=_average_rating,
             thumbnail_url=self.thumbnail_url,
             type=self.type,
             excerpt=self.excerpt,
@@ -40,6 +47,7 @@ class Lecture(db.Model):
             content=self.content,
             transcript=self.transcript,
             video_url=self.video_url)
+
         return output_dict
 
 
@@ -57,3 +65,26 @@ class Review(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
+
+    @classmethod
+    def highest_rated_lectures(cls, count=10):
+        results = []
+        _results = cls.query.with_entities(
+            cls.reviewed_lecture, func.avg(
+                cls.rating).label(
+                'average_rating')).group_by(cls.reviewed_lecture).order_by(
+                desc(func.avg(cls.rating))).limit(count).all()
+
+        for _result in _results:
+            _result_combined = json.dumps(_result, default=str)
+            _result_lecture = int(re.findall(r"\d+", _result_combined)[0])
+            results.append(_result_lecture)
+
+        return results
+
+    @classmethod
+    def get_average_ratings(cls, lecture_id):
+        result = cls.query.with_entities(func.avg(cls.rating).label(
+            'average_rating')).filter_by(reviewed_lecture=lecture_id).scalar()
+
+        return int(float(result))
