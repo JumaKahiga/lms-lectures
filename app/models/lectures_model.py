@@ -35,7 +35,7 @@ class Lecture(db.Model):
         output_dict = dict(
             id=self.id,
             title=self.title,
-            author=self.author,
+            author=self.author_lectures.name,
             average_rating=_average_rating,
             thumbnail_url=self.thumbnail_url,
             type=self.type,

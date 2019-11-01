@@ -10,7 +10,7 @@ from flask_restful import Api
 from app.models import db
 from app.views.index import RandomLecture
 from app.views.lectures import (
-    FetchAllLectures, FetchTopTenLectures)
+    FetchAllLectures, FetchTopTenLectures, FilterLectures)
 from app.views.login import LoginAdmin, LoginUser
 from app.views.register import CreateUser, CreateAdmin
 from app.views.seed_data import LoadData
@@ -45,5 +45,6 @@ def create_app(config=environment):
     api.add_resource(
         FetchAllLectures, '/lectures/<start_page>/<items_per_page>')
     api.add_resource(FetchTopTenLectures, '/lectures/top-10')
+    api.add_resource(FilterLectures, '/lectures/filter/<author_name>')
 
     return app
