@@ -2,6 +2,8 @@ from flask import make_response, jsonify
 from flask_restful import Resource
 
 from app.models.lectures_model import Lecture, Review
+from app.models.person_model import User
+from app.utilities.validators import validate_string
 
 
 class FetchAllLectures(Resource):
@@ -51,3 +53,31 @@ class FetchTopTenLectures(Resource):
 
         return make_response(jsonify(
             {'lectures_count': len(data), 'lectures': data}), 200)
+
+
+class FilterLectures(Resource):
+    def get(self, author_name):
+        if author_name and not validate_string(author_name):
+            return make_response(jsonify(
+                {'error': 'author name must be a string'}))
+
+        author_name.capitalize()
+
+        user = User.query.filter(User.name.contains(author_name)).first()
+
+        data = []
+
+        if not user:
+            return make_response(jsonify(
+                {
+                    'message': f'no lecture found with {author_name} as author'
+                }), 200)
+
+        for lecture in user.lectures:
+            data.append(lecture.toJson())
+
+        return make_response(jsonify(
+            {
+                'lectures': data,
+                'total_lectures': len(data),
+                }), 200)
