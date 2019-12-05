@@ -6,8 +6,8 @@ from sqlalchemy.exc import IntegrityError, DatabaseError
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import sessionmaker
 
-
-engine = create_engine(os.getenv('DATABASE_URL'))
+# 'postgresql://postgres@database/lms_db'
+engine = create_engine(os.getenv('DATABASE_URL', 'postgresql://postgres@database/lms_db'))
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 Base.metadata.bind = engine
@@ -107,3 +107,10 @@ class DataLoadContextManager:
             table.id = result[0]
 
         return table
+
+
+# For loading data on the Docker container
+if __name__ == '__main__':
+    file = open('app/utilities/data.json')
+    with DataLoadContextManager(file):
+        print('Seed data loaded successfully')

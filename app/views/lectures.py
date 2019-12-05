@@ -21,8 +21,12 @@ class FetchAllLectures(Resource):
         if not items_per_page:
             items_per_page = 20
 
-        lectures = Lecture.query.paginate(
-            start_page, items_per_page, False)
+        try:
+            lectures = Lecture.query.paginate(
+                start_page, items_per_page, False)
+        except Exception:
+            return make_response(jsonify(
+                {'error': 'No lectures found'}))
 
         data = []
 
@@ -70,7 +74,7 @@ class FilterLectures(Resource):
         if not user:
             return make_response(jsonify(
                 {
-                    'message': f'no lecture found with {author_name} as author'
+                    'message': 'no lecture found with {} as author'.format(author_name) # noqa
                 }), 200)
 
         for lecture in user.lectures:

@@ -50,6 +50,10 @@ class Lecture(db.Model):
 
         return output_dict
 
+    @classmethod
+    def object_manager(cls):
+        pass
+
 
 class Review(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -81,6 +85,13 @@ class Review(db.Model):
             results.append(_result_lecture)
 
         return results
+
+    @classmethod
+    def get_system_average_ratings(cls):
+        result = cls.query.with_entities(
+            func.avg(cls.rating).label('average_rating')).scalar()
+
+        return int(float(result))
 
     @classmethod
     def get_average_ratings(cls, lecture_id):
