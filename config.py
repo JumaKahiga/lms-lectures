@@ -7,7 +7,7 @@ class Config():
 
 
 class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'database')
 
 
 class TestingConfig(Config):
